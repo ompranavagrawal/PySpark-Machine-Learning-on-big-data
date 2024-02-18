@@ -1,45 +1,51 @@
-In the realm of big data, the ability to efficiently process, analyze, and derive valuable insights is paramount. This document outlines a comprehensive approach to applying machine learning algorithms to big data using Apache Spark, a unified analytics engine for large-scale data processing.
+**Introduction**
 
-**Overview**
+This project aims to identify fake job postings within a dataset using PySpark, a powerful tool for handling big data. By employing different machine learning classifiers, we aim to develop a robust model that can accurately distinguish between genuine and fraudulent job listings.
 
-The Python script provided leverages PySpark to perform data preprocessing, feature extraction, and machine learning on a dataset of job postings, aiming to classify fraudulent postings. The process involves several critical steps, from initial data cleaning to applying various machine learning models and evaluating their performance.
+**Dataset**
+
+The dataset, "fake_job_postings.csv", consists of job listings with various attributes. Each listing is labeled as fraudulent or not, making this a binary classification problem.
+
+**Methodology**
 
 **Data Preprocessing**
 
-Data preprocessing is a vital step in any machine learning pipeline, ensuring that the data fed into the models is clean and of high quality.
+**Data Loading**: The dataset is loaded from an HDFS path into a Spark DataFrame.
 
-**Loading Data**: The dataset is loaded into a Spark DataFrame from a CSV file.
-**Cleaning Data**: Rows with missing or null values in the 'fraudulent' column are filtered out. Additionally, text columns are cleaned and normalized to lower case, with special characters removed.
-**Balancing Data**: The dataset is balanced to address class imbalance, a common issue in fraud detection tasks.
+**Missing Value Analysis**: Columns with a significant percentage of missing values are identified and dropped.
+
+**Text Cleaning**: Regular expressions are used to clean text columns, removing non-alphanumeric characters and converting text to lowercase.
 
 **Feature Engineering**
 
-Feature engineering involves transforming raw data into a format that is more suitable for modeling:
+**Text Vectorization**: The description column is tokenized and vectorized using TF-IDF to transform textual data into a numerical format suitable for machine learning models.
 
-**Tokenization and Stop Words Removal**: The text descriptions are tokenized, and common stop words are removed.
+**Data Balancing**: The dataset is balanced by undersampling the majority class to improve model performance on minority classes.
 
-**TF-IDF**: The term frequency-inverse document frequency (TF-IDF) technique is applied to convert text into a numerical format that reflects the importance of words within the dataset.
+**Model Training and Evaluation**
 
-**Machine Learning Models**
-
-Several machine learning models are trained and evaluated:
+Four classifiers are evaluated:
 
 **Logistic Regression**
-**Linear Support Vector Machine (SVC)**
+
+**Linear Support Vector Classifier (LinearSVC)**
+
 **Random Forest Classifier**
+
 **Multilayer Perceptron Classifier**
 
-Each model is tuned and evaluated using a cross-validation approach to find the best set of hyperparameters. Performance metrics such as accuracy, F1 score, and the best parameters for each model are logged for analysis.
+For each model:
 
-**Results and Analysis**
+A Pipeline is constructed, including preprocessing and the classifier.
 
-The results section would typically include a comparison of the performance metrics across different models, insights into the feature importances, and a discussion on the best-performing model based on the evaluation metrics.
+Hyperparameter tuning is performed using CrossValidator with a ParamGridBuilder.
+
+Model performance is assessed using accuracy and F1 score.
+
+**Results**
+
+Model performance is documented, detailing the accuracy, F1 score, and best parameters for each classifier.
 
 **Conclusion**
 
-The application of machine learning to big data, as demonstrated in this project, highlights the potential of PySpark in handling large datasets and performing complex analytical tasks. The insights gained from this analysis can help organizations in early detection and prevention of fraudulent job postings.
-
-**Future Work**
-
-Future directions could include exploring more sophisticated natural language processing techniques, experimenting with larger datasets, and deploying the models as a real-time fraud detection service.
-
+The project demonstrates the application of various machine learning models to detect fake job postings in a big data environment using PySpark. The effectiveness of each model varies, with detailed results providing insights into the best-performing models based on accuracy and F1 score.
